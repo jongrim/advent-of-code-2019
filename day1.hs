@@ -3,4 +3,13 @@ input = ["67931","140303","100800","69347","113036","127599","55139","99718","11
 mass :: (Integral a) => a -> a
 mass m = (m `div` 3) - 2
 
-computeInputMass = sum [mass (read x :: Int) | x <- input]
+computeInputMass = sum [computeAddedMass x | x <- convertToIntegral input]
+
+convertToIntegral :: [String] -> [Int]
+convertToIntegral xs = [read x :: Int | x <- xs]
+
+computeAddedMass :: (Integral a) => a -> a
+computeAddedMass num
+  | nextMass <= 0 = 0
+  | otherwise = nextMass + computeAddedMass nextMass
+  where nextMass = mass num
